@@ -47,8 +47,9 @@ public class Manager{
         if (w != null)
         {
             waves[next] = w;
+            next = (next + 1) % max_waves;
         }
-		next = (next + 1) %  max_waves;
+
 	}
 
 	public void input_received(int player_num, int val){
