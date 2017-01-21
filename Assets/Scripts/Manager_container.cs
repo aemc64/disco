@@ -27,7 +27,14 @@ public class Manager_container : MonoBehaviour {
 	public float player_input_error;
     public Color[] colors;
     public GameObject wavePrefab;
-    public string[] players = new string[4];
+	public string[] players;
+
+	public float wave_grow_rate;
+	public Vector3[] playersDefaultPosition;
+	public Vector2[] playersDirections;
+	public float playersMovement;
+	public GameObject[] playersPrefabs;
+	public int[] charactersId;
 
 	public bool cargado;
 	private delegate void delegado();
@@ -41,9 +48,11 @@ public class Manager_container : MonoBehaviour {
 	}
 
 	private void nullFun(){
-		Debug.Log ("No cargado");
+		//Debug.Log ("No cargado");
 		if (cargado) {
-			m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error, wavePrefab, colors);
+			m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time, 
+				player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate, 
+				playersDefaultPosition, playersDirections, playersMovement);
 			d = new delegado(myupdate);
 		}
 	}
