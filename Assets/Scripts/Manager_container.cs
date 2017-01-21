@@ -36,9 +36,9 @@ public class Manager_container : MonoBehaviour {
 	public GameObject[] playersPrefabs;
 	public int[] charactersId;
 
-	public bool cargado;
-	private delegate void delegado();
-	private delegado d;
+	public bool cargado; //boleano para cambiar la funcion a correr en el update
+	private delegate void delegado(); // crea el tipo apuntador a funcion que retorna void y no recibe argumentos
+	private delegado d; //una variable de tipo apuntador a funcion que retorna void y no recibe argumentos
 
 	private Manager m;
 
