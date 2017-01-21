@@ -7,7 +7,7 @@ public class WaveGenerator {
     private Vector3 waveOrigin;
     private GameObject wavePrefab;
 
-    WaveGenerator(Vector3 waveOrigin, GameObject wavePrefab)
+    public WaveGenerator(Vector3 waveOrigin, GameObject wavePrefab)
     {
         this.waveOrigin = waveOrigin;
         this.wavePrefab = wavePrefab;
@@ -15,10 +15,10 @@ public class WaveGenerator {
 
     private Wave createWave()
     {
-        Wave newWave = new Wave();
-        newWave.transform.position = waveOrigin;
-        newWave.transform.localScale = Vector3.zero;
-        return newWave;
+        //Wave newWave = new Wave();
+        //newWave.transform.position = waveOrigin;
+        //newWave.transform.localScale = Vector3.zero;
+        return null;
     }
 
     public Wave Update()

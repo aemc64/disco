@@ -12,8 +12,8 @@ public class Manager{
 	private float player_input_error;
 	private Sprite[] wave_sprites;
 
-	private player[] players;
-	private wave[] waves;
+	private Player[] players;
+	private Wave[] waves;
 	private int next;
 	private int actual;
 	private int ultimo;
@@ -33,17 +33,17 @@ public class Manager{
 		ultimo = 0;
 		wave_grow_rate =0.5f;
 
-		players = new player[max_players];
+		players = new Player[max_players];
 		for (int i = 0;i<max_players;i++){
-			players[i]=new player(players_vida);
+			players[i]=new Player(players_vida);
 		}
 
-		waves = new wave[max_waves];
+		waves = new Wave[max_waves];
 	}
 
 	public void crea_wave(){
 		int correctVal = Random.Range (1, 4);
-		waves[next] = new wave(correctVal,wave_sprites [correctVal - 1]);
+		waves[next] = new Wave(correctVal,wave_sprites [correctVal - 1]);
 		next = (next + 1) %  max_waves;
 	}
 
@@ -73,7 +73,7 @@ public class Manager{
 				
 			if (waves [actual] != null) {
 				if (Time.time >= waves [actual].create_time + wave_active_time) {
-					foreach (player p in players) {
+					foreach (Player p in players) {
 						p.check_correct_press (waves [actual].correctVal, player_input_error);
 					}
 					actual = (actual + 1) % max_waves;

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class player {
+public class Player {
 	public int vida;
 	private int last_key_pressed;
 	private float timeAtLastKeyPressed;
 
-	public player(int vida_in){
+	public Player(int vida_in){
 		vida = vida_in;
 		timeAtLastKeyPressed = 0;
 		last_key_pressed = 1000;

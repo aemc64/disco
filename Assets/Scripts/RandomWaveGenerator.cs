@@ -8,7 +8,10 @@ public class RandomWaveGenerator : WaveGenerator{
 	public float minWait;
 	public float maxWait;
 
+    public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab) : base(waveOrigin, wavePrefab)
+    {
 
+    }
 
 	//public IEnumerator Generate()
 	//{

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class wave {
+public class Wave {
 	public float create_time;
 	public int correctVal;
 	private GameObject displayer;
 
-	public wave(int valor, Sprite s){
+	public Wave(int valor, Sprite s){
 		create_time = Time.time;
 		correctVal = valor;
 
