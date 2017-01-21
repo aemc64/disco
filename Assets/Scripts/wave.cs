@@ -22,6 +22,6 @@ public class Wave {
 	}
 
 	public void update(float wave_grow){
-		displayer.transform.localScale += new Vector3 (wave_grow,wave_grow,0);
+		//displayer.transform.localScale += new Vector3 (wave_grow,wave_grow,0);
 	}
 }

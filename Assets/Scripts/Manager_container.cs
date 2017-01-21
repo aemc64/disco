@@ -102,8 +102,8 @@ public class Manager_container : MonoBehaviour {
 			m.input_received (3, 3);
 		if (Input.GetKey ("4"))
 			m.input_received (3, 4);
-
-		m.on_update ();
 */
+		m.on_update ();
+
     }
 }
