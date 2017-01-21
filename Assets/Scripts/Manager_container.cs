@@ -23,13 +23,13 @@ public class Manager_container : MonoBehaviour {
 	public int players_vida;
 	public int max_players;
 	public float wave_life_time;
-	public float wave_active_time;
+	public float[] wave_active_time;
+	public float[] wave_grow_rate;
 	public float player_input_error;
     public Color[] colors;
     public GameObject wavePrefab;
 	public string[] players;
 
-	public float wave_grow_rate;
 	public Vector3[] playersDefaultPosition;
 	public Vector2[] playersDirections;
 	public float playersMovement;

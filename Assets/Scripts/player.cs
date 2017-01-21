@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player {
 	public int vida;
@@ -18,6 +19,7 @@ public class Player {
 		this.movement = movement;
 		displayer = GameObject.Instantiate (playerPrefab);
 		displayer.transform.position = initPos;
+		this.movement = movement / vida_in;
 	}
 
 	public void key_press(int i){
@@ -45,6 +47,7 @@ public class Player {
 
 	public void Damage()
 	{
-		displayer.transform.position += new Vector3 (movement * direction.x, movement * direction.y, 0f);
+		Vector3 target = displayer.transform.position + new Vector3 (movement * direction.x, movement * direction.y, 0f);
+		displayer.transform.DOLocalMove (target, 1f).SetEase (Ease.OutQuad);
 	}
 }

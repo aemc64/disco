@@ -8,7 +8,7 @@ public class Manager{
 	private int players_vida;
 	private int max_players;
 	private float wave_life_time;
-	private float wave_active_time; //tiempo en el cual la wave activa se evalua
+	private float[] wave_active_time; //tiempo en el cual la wave activa se evalua
 	private float player_input_error;
 
 	private Player[] players;
@@ -16,13 +16,13 @@ public class Manager{
 	private int next;
 	private int actual;
 	private int ultimo;
-	private float wave_grow_rate;
+	private float[] wave_grow_rate;
 
     private WaveGenerator wg;
 
-	public Manager(int o,int j,int k,float l,float m,float n, Color[] colors,
+	public Manager(int o,int j,int k,float l,float[] m,float n, Color[] colors,
 		GameObject wavePrefab, GameObject[] playerPrefabs, int[] charactersId, 
-		float wave_grow_rate, Vector3[] playersDefaultPosition, Vector2[] playersDirections, float playersMovement){
+		float[] wave_grow_rate, Vector3[] playersDefaultPosition, Vector2[] playersDirections, float playersMovement){
 		max_waves = o;
 		players_vida = j;
 		max_players = k;
@@ -63,6 +63,9 @@ public class Manager{
 
 	public void on_update(){
 
+		Random.InitState (System.DateTime.Now.Millisecond);
+		int ran = Random.Range (0, wave_active_time.Length);
+
         waveGeneration();
 
 		if (waves [ultimo] != null) {
@@ -78,12 +81,12 @@ public class Manager{
 			}
 
 			while (i != next) {
-				waves [i].update (wave_grow_rate * Time.deltaTime);
+				waves [i].update (wave_grow_rate[ran] * Time.deltaTime);
 				i = (i + 1) % max_waves;
 			}
 				
 			if (waves [actual] != null) {
-				if (Time.time >= waves [actual].create_time + wave_active_time) {
+				if (Time.time >= waves [actual].create_time + wave_active_time[ran]) {
 					foreach (Player p in players) {
 						p.check_correct_press (waves [actual].correctVal, player_input_error);
 					}
