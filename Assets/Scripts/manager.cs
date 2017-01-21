@@ -44,6 +44,7 @@ public class Manager{
 
 	public void waveGeneration(){
         Wave w = wg.update();
+		Debug.Log ("pass");
         if (w != null)
         {
             waves[next] = w;
