@@ -3,6 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Manager_container : MonoBehaviour {
+
+	private static Manager_container _instance;
+
+	public static Manager_container Instance { get { return _instance; } }
+
+	private void Awake()
+	{
+		if (_instance != null && _instance != this)
+		{
+			Destroy(this.gameObject);
+		} else {
+			_instance = this;
+		}
+		DontDestroyOnLoad(gameObject);
+	}
+
 	public int max_waves;
 	public int players_vida;
 	public int max_players;
