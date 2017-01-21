@@ -41,7 +41,7 @@ public class Manager_container : MonoBehaviour {
 			player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate);
 		last_wave = Time.time;
 	}
-	
+
 	// Update is called once per frame
 	/// <summary>
     /// 
