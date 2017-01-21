@@ -27,6 +27,10 @@ public class PlayerManager : MonoBehaviour {
     
     void Update() {
 
+        if (players[0] != null && Input.GetKeyDown("Submit")) {
+            players.CopyTo(Manager_container.Instance.players,0);
+        }
+
         if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0))
         {
             bool there = false;
