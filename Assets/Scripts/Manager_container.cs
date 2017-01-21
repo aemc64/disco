@@ -9,13 +9,14 @@ public class Manager_container : MonoBehaviour {
 	public float wave_life_time;
 	public float wave_active_time;
 	public float player_input_error;
+	public Sprite[] wave_sprites;
 
 	private float last_wave;
 
 	private Manager m;
 	// Use this for initialization
 	void Start () {
-		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error);
+		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error,wave_sprites);
 
 		last_wave = Time.time;
 	}

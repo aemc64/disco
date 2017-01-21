@@ -5,9 +5,23 @@ using UnityEngine;
 public class wave {
 	public float create_time;
 	public int correctVal;
-	public wave(){
+	private GameObject displayer;
+
+	public wave(int valor, Sprite s){
 		create_time = Time.time;
-		correctVal = 1;
-		//correctVal = Random.Range (1, 4);
+		correctVal = valor;
+
+		displayer = new GameObject ();
+		SpriteRenderer renderer = displayer.AddComponent<SpriteRenderer> ();
+		renderer.sprite = s;
+		displayer.transform.localScale = new Vector3 (0, 0, 1);
+	}
+
+	public void clean(){
+		GameObject.Destroy (displayer);
+	}
+
+	public void update(float wave_grow){
+		displayer.transform.localScale += new Vector3 (wave_grow,wave_grow,0);
 	}
 }
