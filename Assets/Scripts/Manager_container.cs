@@ -9,14 +9,15 @@ public class Manager_container : MonoBehaviour {
 	public float wave_life_time;
 	public float wave_active_time;
 	public float player_input_error;
-	public Sprite[] wave_sprites;
+    public Color[] colors;
+    public GameObject wavePrefab;
 
 	private float last_wave;
 
 	private Manager m;
 	// Use this for initialization
 	void Start () {
-		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error,wave_sprites);
+		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error, wavePrefab, colors);
 
 		last_wave = Time.time;
 	}
@@ -58,12 +59,6 @@ public class Manager_container : MonoBehaviour {
 			m.input_received (3, 3);
 		if (Input.GetKey ("4"))
 			m.input_received (3, 4);
-
-		if (last_wave + 6 < Time.time) {
-			Debug.Log ("Creada wave");
-			m.crea_wave ();
-			last_wave = Time.time;
-		}
 
 		m.on_update ();
 	}

@@ -7,14 +7,14 @@ public class Wave {
 	public int correctVal;
 	private GameObject displayer;
 
-	public Wave(int valor, Sprite s){
+    // Constructor
+	public Wave(int valor, GameObject wavePrefab, Color color, Vector3 initPos){
 		create_time = Time.time;
 		correctVal = valor;
-
-		displayer = new GameObject ();
-		SpriteRenderer renderer = displayer.AddComponent<SpriteRenderer> ();
-		renderer.sprite = s;
-		displayer.transform.localScale = new Vector3 (0, 0, 1);
+        displayer = GameObject.Instantiate(wavePrefab);
+        displayer.transform.position = initPos;
+        SpriteRenderer renderer = displayer.GetComponent<SpriteRenderer>();
+		renderer.color = color;
 	}
 
 	public void clean(){
