@@ -29,44 +29,54 @@ public class Manager_container : MonoBehaviour {
     public GameObject wavePrefab;
     public string[] players = new string[4];
 
-
-    private float last_wave;
+	public bool cargado;
+	private delegate void delegado();
+	private delegado d;
 
 	private Manager m;
+
 	// Use this for initialization
 	void Start () {
-		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error, wavePrefab, colors);
-
-		last_wave = Time.time;
+		d = new delegado(nullFun);
 	}
-	
-	// Update is called once per frame
-	/// <summary>
-    /// 
-    /// </summary>
+
+	private void nullFun(){
+		Debug.Log ("No cargado");
+		if (cargado) {
+			m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time,player_input_error, wavePrefab, colors);
+			d = new delegado(myupdate);
+		}
+	}
+
+	private void myupdate(){
+		for(int i = 0; i<4; i++) { 
+			if (players[i] == "T") {
+				if (Input.GetKey("k"))
+					m.input_received(i, 1);
+				if (Input.GetKey("o"))
+					m.input_received(i, 2);
+				if (Input.GetKey("l"))
+					m.input_received(i, 3);
+				if (Input.GetKey("p"))
+					m.input_received(i, 4);
+			} else {
+				if(Input.GetButton("A_" + players[i]))
+					m.input_received(i, 1);
+				if (Input.GetButton("B_" + players[i]))
+					m.input_received(i, 2);
+				if (Input.GetButton("X_" + players[i]))
+					m.input_received(i, 3);
+				if (Input.GetButton("Y_" + players[i]))
+					m.input_received(i, 4);
+			}
+		}
+		m.on_update ();
+	}
+
     void Update () {
-        for(int i = 0; i<4; i++) { 
-            if (players[i] == "T") {
-                if (Input.GetKey("k"))
-                    m.input_received(i, 1);
-                if (Input.GetKey("o"))
-                    m.input_received(i, 2);
-                if (Input.GetKey("l"))
-                    m.input_received(i, 3);
-                if (Input.GetKey("p"))
-                    m.input_received(i, 4);
-            } else {
-               if(Input.GetButton("A_" + players[i]))
-                    m.input_received(i, 1);
-                if (Input.GetButton("B_" + players[i]))
-                    m.input_received(i, 2);
-                if (Input.GetButton("X_" + players[i]))
-                    m.input_received(i, 3);
-                if (Input.GetButton("Y_" + players[i]))
-                    m.input_received(i, 4);
-            }
-        }
-/*
+		d ();
+
+		/**
         if (Input.GetKey ("z"))
 			m.input_received (0, 1);
 		if (Input.GetKey ("x"))
@@ -103,7 +113,5 @@ public class Manager_container : MonoBehaviour {
 		if (Input.GetKey ("4"))
 			m.input_received (3, 4);
 */
-		m.on_update ();
-
     }
 }
