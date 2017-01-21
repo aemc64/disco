@@ -7,11 +7,15 @@ public class Player {
 	private int last_key_pressed;
 	private float timeAtLastKeyPressed;
 	private GameObject displayer;
+	private Vector2 direction;
+	private float movement;
 
-	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos){
+	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement){
 		vida = vida_in;
 		timeAtLastKeyPressed = 0;
 		last_key_pressed = 1000;
+		this.direction = direction;
+		this.movement = movement;
 		displayer = GameObject.Instantiate (playerPrefab);
 		displayer.transform.position = initPos;
 	}
@@ -41,6 +45,6 @@ public class Player {
 
 	public void Damage()
 	{
-		displayer.transform.position += new Vector3 (-0.5f, 0f, 0f);
+		displayer.transform.position += new Vector3 (movement * direction.x, movement * direction.y, 0f);
 	}
 }

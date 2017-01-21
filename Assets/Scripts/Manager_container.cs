@@ -31,6 +31,9 @@ public class Manager_container : MonoBehaviour {
 	public GameObject[] playersPrefabs;
 	public int[] charactersId;
 	public string[] players;
+	public Vector3[] playersDefaultPosition;
+	public Vector2[] playersDirections;
+	public float playersMovement;
 
     private float last_wave;
 	private float currentWait;
@@ -38,7 +41,8 @@ public class Manager_container : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time, 
-			player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate);
+			player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate, 
+			playersDefaultPosition, playersDirections, playersMovement);
 		last_wave = Time.time;
 	}
 
