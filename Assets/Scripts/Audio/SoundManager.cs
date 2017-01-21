@@ -25,7 +25,12 @@ public class SoundManager : MonoBehaviour
 		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
 		DontDestroyOnLoad(gameObject);
 		As = gameObject.GetComponent<AudioSource>();
-		PlayWithFadeOut(Random.Range(0,1));
+		PlayWithFadeOut(Random.Range(0,4));
+	}
+
+	public void PlayWithFadeOutRandom()
+	{
+		StartCoroutine(PlayClip(Random.Range(0, 4)));
 	}
 
 	public void PlayWithFadeOut(int clip)
@@ -43,12 +48,12 @@ public class SoundManager : MonoBehaviour
 		yield return null;
 	}
 		
-
+	public 
 	IEnumerator PlayClip(int clip)
 	{
 		if (As.clip != null)
 		{
-			yield return StartCoroutine(AudioFadeOut.FadeOut(As, 0.2f));
+			yield return StartCoroutine(AudioFadeOut.FadeOut(As, 0.75f));
 		}
 		yield return StartCoroutine(PlaySingle(clip));
 	}
