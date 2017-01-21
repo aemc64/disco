@@ -17,9 +17,12 @@ public class Manager{
 	private int actual;
 	private int ultimo;
 	private float wave_grow_rate;
+
     private WaveGenerator wg;
 
-	public Manager(int o,int j,int k,float l,float m,float n,GameObject wavePrefab, Color[] colors){
+	public Manager(int o,int j,int k,float l,float m,float n, Color[] colors,
+		GameObject wavePrefab, GameObject[] playerPrefabs, int[] charactersId, 
+		float wave_grow_rate){
 		max_waves = o;
 		players_vida = j;
 		max_players = k;
@@ -32,11 +35,11 @@ public class Manager{
 		actual = 0;
 		next = 0;
 		ultimo = 0;
-		wave_grow_rate =0.5f;
+		this.wave_grow_rate = wave_grow_rate;
 
 		players = new Player[max_players];
 		for (int i = 0;i<max_players;i++){
-			players[i]=new Player(players_vida);
+			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], new Vector3(-5f, 0f, 0f));
 		}
 
 		waves = new Wave[max_waves];
@@ -89,6 +92,5 @@ public class Manager{
 			}
 
 		}
-
 	}
 }
