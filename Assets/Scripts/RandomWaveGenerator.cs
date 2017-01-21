@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RandomWaveGenerator : WaveGenerator{
 
-	public float minWait = .3f;
-	public float maxWait = .8f;
+	public float minWait = 1f;
+	public float maxWait = 3f;
     //Num between [0, 100]
     public int frequency = 50;
 
