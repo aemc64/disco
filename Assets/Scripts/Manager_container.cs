@@ -27,8 +27,10 @@ public class Manager_container : MonoBehaviour {
 	public float player_input_error;
     public Color[] colors;
     public GameObject wavePrefab;
+    public string[] players = new string[4];
 
-	private float last_wave;
+
+    private float last_wave;
 
 	private Manager m;
 	// Use this for initialization
@@ -39,8 +41,33 @@ public class Manager_container : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKey ("z"))
+	/// <summary>
+    /// 
+    /// </summary>
+    void Update () {
+        for(int i = 0; i<4; i++) { 
+            if (players[i] == "T") {
+                if (Input.GetKey("k"))
+                    m.input_received(i, 1);
+                if (Input.GetKey("o"))
+                    m.input_received(i, 2);
+                if (Input.GetKey("l"))
+                    m.input_received(i, 3);
+                if (Input.GetKey("p"))
+                    m.input_received(i, 4);
+            } else {
+               if(Input.GetButton("A_" + players[i]))
+                    m.input_received(i, 1);
+                if (Input.GetButton("B_" + players[i]))
+                    m.input_received(i, 2);
+                if (Input.GetButton("X_" + players[i]))
+                    m.input_received(i, 3);
+                if (Input.GetButton("Y_" + players[i]))
+                    m.input_received(i, 4);
+            }
+        }
+/*
+        if (Input.GetKey ("z"))
 			m.input_received (0, 1);
 		if (Input.GetKey ("x"))
 			m.input_received (0, 2);
@@ -77,5 +104,6 @@ public class Manager_container : MonoBehaviour {
 			m.input_received (3, 4);
 
 		m.on_update ();
-	}
+*/
+    }
 }
