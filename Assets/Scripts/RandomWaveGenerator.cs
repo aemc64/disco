@@ -4,28 +4,35 @@ using UnityEngine;
 
 public class RandomWaveGenerator : WaveGenerator{
 
-	public GameObject[] wavesPrefabs;
-	public float minWait;
-	public float maxWait;
+	public float minWait = .3f;
+	public float maxWait = .8f;
+    //Num between [0, 100]
+    public int frequency = 50;
 
-    public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab) : base(waveOrigin, wavePrefab)
+    private float lastBornTime;
+
+    public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab, Color[] colors) : base(waveOrigin, wavePrefab, colors) { }
+
+    public void setValues(float minWait, float maxWait, int frequency)
     {
-
+        this.minWait = minWait;
+        this.maxWait = maxWait;
+        this.frequency = frequency;
     }
 
-	//public IEnumerator Generate()
-	//{
-	//	while (!GameManager.Instance.GameEnded)
-	//	{
-	//		float waitTime = Random.Range (minWait, maxWait);
-	//		yield return new WaitForSeconds (waitTime);
-	//		int waveId = Random.Range (0, wavesPrefabs.Length);
-	//		GameObject wave = Instantiate (wavesPrefabs [waveId]);
-	//		if (GameManager.Instance != null)
-	//		{
-	//			int colorId = Random.Range (0, GameManager.Instance.inputColors.Length);
-	//			wave.GetComponent<Wave> ().ColorId = colorId;
-	//		}
-	//	}
-	//}
+    public override Wave update()
+    {
+        if ((Time.time - lastBornTime > minWait) || (Time.time - lastBornTime > maxWait))
+        {
+            if (frequency > Random.Range(0, 100))
+            {
+                lastBornTime = Time.time;
+                int value = Random.Range(0, 4);
+                return createWave(value);
+            }
+        }
+
+        return null;
+    }
+
 }

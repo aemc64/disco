@@ -6,24 +6,23 @@ public class WaveGenerator {
 
     private Vector3 waveOrigin;
     private GameObject wavePrefab;
+    private Color[] colors;
 
-    public WaveGenerator(Vector3 waveOrigin, GameObject wavePrefab)
+    public WaveGenerator(Vector3 waveOrigin, GameObject wavePrefab, Color[] colors)
     {
         this.waveOrigin = waveOrigin;
         this.wavePrefab = wavePrefab;
+        this.colors = colors;
     }
 
-    private Wave createWave()
+    protected Wave createWave(int value)
     {
-        //Wave newWave = new Wave();
-        //newWave.transform.position = waveOrigin;
-        //newWave.transform.localScale = Vector3.zero;
-        return null;
+        Wave newWave = new Wave(value, wavePrefab, colors[value],waveOrigin);
+        return newWave;
     }
 
-    public Wave Update()
+    public virtual Wave update()
     {
-
         return null;
     }
 }

@@ -10,7 +10,6 @@ public class Manager{
 	private float wave_life_time;
 	private float wave_active_time; //tiempo en el cual la wave activa se evalua
 	private float player_input_error;
-	private Sprite[] wave_sprites;
 
 	private Player[] players;
 	private Wave[] waves;
@@ -18,15 +17,17 @@ public class Manager{
 	private int actual;
 	private int ultimo;
 	private float wave_grow_rate;
+    private WaveGenerator wg;
 
-	public Manager(int o,int j,int k,float l,float m,float n,Sprite[] sprites){
+	public Manager(int o,int j,int k,float l,float m,float n,GameObject wavePrefab, Color[] colors){
 		max_waves = o;
 		players_vida = j;
 		max_players = k;
 		wave_life_time = l;
 		wave_active_time = m;
 		player_input_error = n;
-		wave_sprites = sprites;
+    
+        wg = new RandomWaveGenerator(Vector3.zero, wavePrefab, colors);
 
 		actual = 0;
 		next = 0;
@@ -41,10 +42,15 @@ public class Manager{
 		waves = new Wave[max_waves];
 	}
 
-	public void crea_wave(){
-		int correctVal = Random.Range (1, 4);
-		waves[next] = new Wave(correctVal,wave_sprites [correctVal - 1]);
-		next = (next + 1) %  max_waves;
+	public void waveGeneration(){
+        Wave w = wg.update();
+		Debug.Log ("pass");
+        if (w != null)
+        {
+            waves[next] = w;
+            next = (next + 1) % max_waves;
+        }
+
 	}
 
 	public void input_received(int player_num, int val){
@@ -53,6 +59,8 @@ public class Manager{
 	}
 
 	public void on_update(){
+
+        waveGeneration();
 
 		if (waves [ultimo] != null) {
 			int i = ultimo;
@@ -83,5 +91,4 @@ public class Manager{
 		}
 
 	}
-
 }
