@@ -11,7 +11,7 @@ public class RandomWaveGenerator : WaveGenerator{
 
     private float lastBornTime;
 
-    public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab, Color[] colors) : base(waveOrigin, wavePrefab, colors) { }
+	public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab, Color[] colors, float[] wave_grow_rate, float[] wave_active_time) : base(waveOrigin, wavePrefab, colors, wave_grow_rate, wave_active_time) { }
 
     public void setValues(float minWait, float maxWait, int frequency)
     {
