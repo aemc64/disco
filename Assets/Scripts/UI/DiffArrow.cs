@@ -9,6 +9,7 @@ public class DiffArrow : MonoBehaviour {
     public bool direction;
     public GameObject gameMode;
     public GameObject arrow;
+    public Sprite[] images;
     public int set = 0;
 
 
@@ -29,16 +30,16 @@ public class DiffArrow : MonoBehaviour {
         switch (GameSettings.difficulty)
         {
             case 1:
-                gameMode.GetComponent<Text>().text = "SIR";
+                gameMode.GetComponent<Image>().sprite = images[0];
                 break;
             case 2:
-                gameMode.GetComponent<Text>().text = "MASTER";
+                gameMode.GetComponent<Image>().sprite = images[1];
                 break;
             case 3:
-                gameMode.GetComponent<Text>().text = "CHAOS";
+                gameMode.GetComponent<Image>().sprite = images[2];
                 break;
             default:
-                gameMode.GetComponent<Text>().text = "NOOB";
+                gameMode.GetComponent<Image>().sprite = images[3];
                 break;
         }
     }

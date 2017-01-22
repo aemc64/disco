@@ -9,6 +9,7 @@ public class LiveArrow : MonoBehaviour {
     public bool direction;
     public GameObject gameMode;
     public GameObject arrow;
+    public Sprite[] images;
     public int set = 0;
 
     public void Modify()
@@ -26,27 +27,27 @@ public class LiveArrow : MonoBehaviour {
         switch (set)
         {
             case 1:
-                gameMode.GetComponent<Text>().text = "1";
+                gameMode.GetComponent<Image>().sprite = images[0];
                 gameObject.GetComponent<Button>().interactable = false;
                 arrow.GetComponent<LiveArrow>().set = 1;
 
                 break;
             case 2:
-                gameMode.GetComponent<Text>().text = "2";
+                gameMode.GetComponent<Image>().sprite = images[1];
                 arrow.GetComponent<Button>().interactable = true;
                 arrow.GetComponent<LiveArrow>().set = 2;
                 break;
             case 3:
-                gameMode.GetComponent<Text>().text = "3";
+                gameMode.GetComponent<Image>().sprite = images[2];
                 arrow.GetComponent<LiveArrow>().set = 3;
                 break;
             case 4:
-                gameMode.GetComponent<Text>().text = "4";
+                gameMode.GetComponent<Image>().sprite = images[3];
                 arrow.GetComponent<Button>().interactable = true;
                 arrow.GetComponent<LiveArrow>().set = 4;
                 break;
             default:
-                gameMode.GetComponent<Text>().text = "5";
+                gameMode.GetComponent<Image>().sprite = images[4];
                 arrow.GetComponent<LiveArrow>().set = 5;
                 gameObject.GetComponent<Button>().interactable = false;
                 break;
