@@ -20,6 +20,8 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	private AudioSource effectScr;
 
+	private GameObject obj;
+
 	private void Awake()
 	{
 		if (_instance != null && _instance != this) {
@@ -38,15 +40,18 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	public IEnumerator PlayGood(Vector3 playerPos, int id)
 	{
-		if (!effectScr.isPlaying)
+		if (!effectScr.isPlaying && obj == null)
+		{
 			effectScr.PlayOneShot (goodFeedback[id].clip);
-		GameObject obj = new GameObject ();
-		obj.transform.position = playerPos;
-		SpriteRenderer sp = obj.AddComponent<SpriteRenderer> ();
-		sp.sprite = goodFeedback[id].message;
-		obj.transform.DOLocalMove ((Vector3)messageMovement, messageDuration).SetEase (ease);
-		yield return new WaitForSeconds (messageDuration);
-		Destroy (obj);
+			obj = new GameObject ();
+			obj.transform.position = playerPos;
+			SpriteRenderer sp = obj.AddComponent<SpriteRenderer> ();
+			sp.sprite = goodFeedback[id].message;
+			obj.transform.DOLocalMove ((Vector3)messageMovement, messageDuration).SetEase (ease);
+			yield return new WaitForSeconds (messageDuration);
+			Destroy (obj);
+		}
+
 	}
 
 	public void FinishGame(Vector3 winnerPosition)
