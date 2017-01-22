@@ -4,11 +4,13 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
-	public AudioClip[] musicSource;                 //Drag a reference to the audio source which will play the music.
-    public Sprite[] backgrounds;                    //Array of possible backgrounds to choose from
+	public AudioClip[] musicSource; //Drag a reference to the audio source which will play the music.
+	public AudioClip[] sfxSource; //Drag a reference to the sfx source which will play the music.
+	public Sprite[] backgrounds;                    //Array of possible backgrounds to choose from
     public GameObject background;                   //The actual background that masks the disk
 	public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager. 
-	AudioSource As;
+	public AudioSource As;
+	public AudioSource sfx;
 	/*public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
 	public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
 	
@@ -23,17 +25,22 @@ public class SoundManager : MonoBehaviour
 			instance = this;
 		//If instance already exists:
 		else if (instance != this)
-			//FadeOut, this enforces our singleton pattern so there can only be one instance of SoundManager.
 			
 		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
 		DontDestroyOnLoad(gameObject);
-		As = gameObject.GetComponent<AudioSource>();
+		//FadeOut, this enforces our singleton pattern so there can only be one instance of SoundManager.
 		PlayWithFadeOut(Random.Range(0,4));
 	}
 
 	public void PlayWithFadeOutRandom()
 	{
 		StartCoroutine(PlayClip(Random.Range(0, 4)));
+	}
+
+	public void PlaySFX(int clip)
+	{
+		sfx.clip = sfxSource[clip];
+		sfx.Play();
 	}
 
 	public void PlayWithFadeOut(int clip)
