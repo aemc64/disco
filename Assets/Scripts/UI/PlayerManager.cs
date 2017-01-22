@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour {
     public GameObject Panel2;
     public GameObject Panel3;
     public GameObject Panel4;
+	public Sprite[] SelectedImages;
     private GameObject[] panels = new GameObject[4];
     private string[] players = new string[4];
 
@@ -27,7 +28,8 @@ public class PlayerManager : MonoBehaviour {
     
     void Update() {
 
-        if (players[0] != null && Input.GetKeyDown("Submit")) {
+		if (players[0] != null && (Input.GetKeyDown("return") || Input.GetKeyDown("joystick button 7")))
+		{
             players.CopyTo(Manager_container.Instance.players,0);
         }
 
@@ -42,6 +44,7 @@ public class PlayerManager : MonoBehaviour {
             {
                 players[actual] = "T";
                 panels[actual].GetComponentsInChildren<Text>()[0].text = "T";
+				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
                 actual++;
             }
         }
@@ -63,6 +66,7 @@ public class PlayerManager : MonoBehaviour {
                     {
                         players[actual] = "P" + j;
                         panels[actual].GetComponentsInChildren<Text>()[0].text = "P" + j;
+						panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
                         actual++;
                         
                     }
