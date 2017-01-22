@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
 	public AudioClip[] musicSource;                 //Drag a reference to the audio source which will play the music.
+    public Sprite[] backgrounds;                    //Array of possible backgrounds to choose from
+    public GameObject background;                   //The actual background that masks the disk
 	public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager. 
 	AudioSource As;
 	/*public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
@@ -46,13 +49,15 @@ public class SoundManager : MonoBehaviour
 		{		
 			cont--;
 			if (cont < 6) { cont = 9; }
+            ChangeBackground(cont);
 			PlayWithFadeOut(cont);
 		}
 
 		if (GUILayout.Button("Next"))
 		{
 			cont++;
-			if (cont > 10) { cont = 6; }
+			if (cont > 9) { cont = 6; }
+            ChangeBackground(cont);
 			PlayWithFadeOut(cont);
 		}
 	}
@@ -76,6 +81,10 @@ public class SoundManager : MonoBehaviour
 		}
 		yield return StartCoroutine(PlaySingle(clip));
 	}
+
+    public void ChangeBackground(int cont) {
+        background.GetComponent<Image>().sprite = backgrounds[cont - 6];
+    }
 }
 public static class AudioFadeOut
 {
