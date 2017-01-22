@@ -61,6 +61,7 @@ public class SoundManager : MonoBehaviour
 			if (cont < 6) { cont = 9; }
             ChangeBackground(cont);
 			PlayWithFadeOut(cont);
+			SongName(cont);
 		}
 
 		if (GUILayout.Button("Next"))
@@ -69,6 +70,7 @@ public class SoundManager : MonoBehaviour
 			if (cont > 9) { cont = 6; }
             ChangeBackground(cont);
 			PlayWithFadeOut(cont);
+			SongName(cont);
 		}
 	}
 
@@ -98,29 +100,37 @@ public class SoundManager : MonoBehaviour
 
 	public void SongName(int cont)
 	{
+		string song = "";
+		string artist = "";
 		switch (cont)
 		{
 			case 6:
-				Titulo.GetComponent<Text>().text = "80's Styke Loop";
-				Artista.GetComponent<Text>().text = "Bones 341";
+				song = "80's Styke Loop";
+				artist = "Bones 341";
 				break;
 			case 7:
-				Titulo.GetComponent<Text>().text = "Waveform";
-				Artista.GetComponent<Text>().text = "MusicByReo";
+				song = "Waveform";
+				artist = "MusicByReo";
 				break;
 			case 8:
-				Titulo.GetComponent<Text>().text = "Vortex";
-				Artista.GetComponent<Text>().text = "PizzaKiller";
+				song = "Vortex";
+				artist = "PizzaKiller";
 				break;
 			case 9:
-				Titulo.GetComponent<Text>().text = "Sounding Wave";
-				Artista.GetComponent<Text>().text = "DUVESTECH";
+				song = "Sounding Wave";
+				artist = "DUVESTECH";
 				break;
 			default:
-				Titulo.GetComponent<Text>().text = "Choose Song";
-				Artista.GetComponent<Text>().text = "Artist";
+				song = "Choose Song";
+				artist = "Artist";
 				break;
 		}
+		Text[] songTexts = Titulo.GetComponentsInChildren<Text>();
+		for (int i = 0; i < songTexts.Length; i++)
+			songTexts[i].text = song;
+		Text[] artistTexts = Artista.GetComponentsInChildren<Text>();
+		for (int i = 0; i < artistTexts.Length; i++)
+			artistTexts[i].text = artist;
 	}
 }
 
