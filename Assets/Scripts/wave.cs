@@ -8,6 +8,8 @@ public class Wave {
 	public GameObject displayer;
 	private float wave_grow_rate;
 	private float wave_active_time;
+	private static uint current_id = 0;
+	public uint id;
 
 	public float WaveActiveTime
 	{
@@ -25,6 +27,9 @@ public class Wave {
 		renderer.color = color;
 		this.wave_active_time = wave_active_time;
 		this.wave_grow_rate = wave_grow_rate;
+
+		current_id += 1;
+		id = current_id;
 	}
 
 	public void clean(){
