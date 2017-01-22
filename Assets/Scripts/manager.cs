@@ -49,10 +49,35 @@ public class Manager{
 
 		players = new Player[max_players];
 		for (int i = 0;i<max_players;i++){
-			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement);
+			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement,i);
 		}
 		waves = new Wave[max_waves];
 		cloneWave = true;
+	}
+
+	public void reset(int o,int j,int k,float l,float[] m,float n, Color[] colors,
+		GameObject wavePrefab, GameObject[] playerPrefabs, int[] charactersId, 
+		float[] wave_grow_rate, Vector3[] playersDefaultPosition, Vector2[] playersDirections, float playersMovement){
+		actual = 0;
+		next = 0;
+		ultimo = 0;
+
+		if (d != null)
+			GameObject.Destroy (d);
+		for (int i = 0; i < max_waves; i++) {
+			if (waves [i] != null) {
+				waves [i].clean ();
+				waves [i] = null;
+			}
+		}
+		cloneWave = true;
+		for (int i = 0;i<max_players;i++){
+			players [i].clean ();
+			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement,i);
+		}
+
+		//wg = new RandomWaveGenerator(Vector3.zero, wavePrefab, colors, wave_grow_rate, m);
+		GameEnded = false;
 	}
 
 	public void waveGeneration(){
@@ -108,7 +133,9 @@ public class Manager{
 						gameEnded = true;
 						if (playersAlive.Count == 1) {
 							playersAlive [0].Celebrate ();
-							PlayerEffectsHandler.Instance.FinishGame (playersAlive [0].displayer.transform.position);
+							PlayerEffectsHandler.Instance.Win (playersAlive [0].displayer.transform.position, playersAlive[0].id + 1);
+						} else {
+							PlayerEffectsHandler.Instance.Draw ();
 						}
 					}
 

@@ -41,6 +41,7 @@ public class Manager_container : MonoBehaviour {
 	private delegado d; //una variable de tipo apuntador a funcion que retorna void y no recibe argumentos
 
 	private Manager m;
+	public bool restart;
 
 	// Use this for initialization
 	void Start () {
@@ -58,34 +59,56 @@ public class Manager_container : MonoBehaviour {
 		}
 	}
 
-	private void myupdate(){
-		for(int i = 0; i<4; i++) { 
-			if (players[i] == "T") {
-				if (Input.GetKey("k"))
-					m.input_received(i, 0);
-				if (Input.GetKey("o"))
-					m.input_received(i, 1);
-				if (Input.GetKey("l"))
-					m.input_received(i, 2);
-				if (Input.GetKey("p"))
-					m.input_received(i, 3);
-			} else {
-				if (Input.GetButton ("A_" + players [i])) 
-					m.input_received (i, 0);
-				if (Input.GetButton("B_" + players[i]))
-					m.input_received(i, 1);
-				if (Input.GetButton("X_" + players[i]))
-					m.input_received(i, 2);
-				if (Input.GetButton("Y_" + players[i]))
-					m.input_received(i, 3);
-			}
+	private void waitForRestart(){
+		//Debug.Log ("No cargado");
+		if (restart) {
+			m.reset (max_waves,players_vida,max_players,wave_life_time,wave_active_time, 
+				player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate, 
+				playersDefaultPosition, playersDirections, playersMovement);
+			//m = new Manager (max_waves,players_vida,max_players,wave_life_time,wave_active_time, 
+			//	player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate, 
+			//	playersDefaultPosition, playersDirections, playersMovement);
+			d = new delegado(myupdate);
+			restart = false;
 		}
-		m.on_update ();
-		if (m.GameEnded)
-			d = new delegado (nullFun);
+	}
+
+	private void myupdate(){
+		if (m.GameEnded) {
+			d = new delegado (waitForRestart);
+			restart = false;
+		} else {
+			for(int i = 0; i<4; i++) { 
+				if (players[i] == "T") {
+					if (Input.GetKey("k"))
+						m.input_received(i, 0);
+					if (Input.GetKey("o"))
+						m.input_received(i, 1);
+					if (Input.GetKey("l"))
+						m.input_received(i, 2);
+					if (Input.GetKey("p"))
+						m.input_received(i, 3);
+				} else {
+					if (Input.GetButton ("A_" + players [i])) 
+						m.input_received (i, 0);
+					if (Input.GetButton("B_" + players[i]))
+						m.input_received(i, 1);
+					if (Input.GetButton("X_" + players[i]))
+						m.input_received(i, 2);
+					if (Input.GetButton("Y_" + players[i]))
+						m.input_received(i, 3);
+				}
+			}
+			m.on_update ();
+		}
 	}
 
     void Update () {
 		d ();
     }
+
+	public void Restart()
+	{
+		cargado = true;
+	}
 }

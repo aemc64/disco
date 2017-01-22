@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerEffectsHandler : MonoBehaviour {
 
@@ -17,10 +20,20 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	public GameFeedBack[] goodFeedback;
 	public GameFeedBack[] badFeedback;
+	public Text[] playersScore;
+	public GameObject DrawMessage;
+	public GameObject WinMessage;
+	public AudioClip WinSound;
+	public AudioClip DrawSound;
+
+	public UnityEvent onGameFinish;
+	public UnityEvent onRestart;
 
 	private AudioSource effectScr;
 
 	private GameObject obj;
+
+	public float endDelay;
 
 	private void Awake()
 	{
@@ -30,6 +43,11 @@ public class PlayerEffectsHandler : MonoBehaviour {
 			_instance = this;
 		}
 		effectScr = GetComponent<AudioSource> ();
+	}
+
+	public void SetScore(int playerId, int score)
+	{
+		playersScore [playerId].text = score.ToString ();
 	}
 		
 	public void PlayRandomGood(Vector3 playerPos)
@@ -54,10 +72,43 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	}
 
-	public void FinishGame(Vector3 winnerPosition)
+	public void Win(Vector3 winnerPosition, int winnerNumber)
 	{
+		StartCoroutine (WinCo (winnerPosition, winnerNumber));
+	}
+
+	public void Draw()
+	{
+		StartCoroutine (DrawCo ());
+	}
+
+	public void Replay()
+	{
+		Manager_container.Instance.restart = true;
+		for (int i = 0; i < playersScore.Length; i++)
+			playersScore [i].text = "0";
+		WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
+		onRestart.Invoke ();
+	}
+
+	IEnumerator WinCo(Vector3 winnerPosition, int winnerNumber)
+	{
+		yield return new WaitForSeconds (endDelay);
 		Vector3 targetPos = new Vector3(winnerPosition.x,winnerPosition.y, winLight.position.z);
 		winLight.position = targetPos;
 		winLight.gameObject.SetActive (true);
+		WinMessage.GetComponent<Animator> ().SetTrigger ("win" + winnerNumber.ToString ());
+		if (WinSound != null)
+			effectScr.PlayOneShot (WinSound);
+		onGameFinish.Invoke ();
+	}
+
+	IEnumerator DrawCo()
+	{
+		yield return new WaitForSeconds (endDelay);
+		DrawMessage.SetActive (true);
+		if (DrawSound != null)
+			effectScr.PlayOneShot (DrawSound);
+		onGameFinish.Invoke ();
 	}
 }

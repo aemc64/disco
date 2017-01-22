@@ -12,10 +12,16 @@ public class Player {
 	private Vector2 direction;
 	private float movement;
 	private Animator anim;
+	public int score;
+	public int id;
 
 	private uint lastcorrectwave;
 
-	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement){
+	public void clean(){
+		GameObject.Destroy (displayer);
+	}
+
+	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement, int id){
 		vida = vida_in;
 		timeAtLastKeyPressed = 0;
 		last_key_pressed = 1000;
@@ -26,6 +32,8 @@ public class Player {
 		displayer.transform.position = initPos;
 		this.movement = movement / vida_in;
 		lastcorrectwave = 0;
+		score = 0;
+		this.id = id;
 	}
 
 	public void key_press(int i){
@@ -38,7 +46,9 @@ public class Player {
 		if (lastcorrectwave != waveid) {
 			if (correctVal == last_key_pressed && Time.time == timeAtLastKeyPressed) {
 				Debug.Log ("Correcto");
+				score++;
 				lastcorrectwave = waveid;
+				PlayerEffectsHandler.Instance.SetScore (id, score);
 				PlayerEffectsHandler.Instance.PlayRandomGood (displayer.transform.position); 
 			}
 		}
