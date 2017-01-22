@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class Player {
 	public int vida;
 	private int last_key_pressed;
 	private float timeAtLastKeyPressed;
-	private GameObject displayer;
+	public GameObject displayer;
 	private Vector2 direction;
 	private float movement;
 	private Animator anim;
@@ -34,6 +35,7 @@ public class Player {
 		if (correctVal == last_key_pressed) {
 			if ((targetTime - error <= timeAtLastKeyPressed) && (targetTime + error >= timeAtLastKeyPressed)) {
 				Debug.Log ("Correcto");
+				PlayerEffectsHandler.Instance.PlayRandomGood (displayer.transform.position); 
 			} else {
 				vida -= 1;
 				Damage ();
@@ -59,5 +61,11 @@ public class Player {
 			anim.SetTrigger ("Death");
 		else
 			anim.SetBool ("SimpleDance", true);
+	}
+
+	public void Celebrate()
+	{
+		anim.SetBool ("SimpleDance", false);
+		anim.SetBool ("Dance", true);
 	}
 }

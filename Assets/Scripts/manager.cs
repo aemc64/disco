@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class Manager{
@@ -11,7 +12,7 @@ public class Manager{
 	private float[] wave_active_time; //tiempo en el cual la wave activa se evalua
 	private float player_input_error;
 
-	private Player[] players;
+	public Player[] players;
 	private Wave[] waves;
 	private int next;
 	private int actual;
@@ -109,7 +110,14 @@ public class Manager{
 							playersAlive.Add (p);
 					}
 					if (playersAlive.Count < 2)
+					{
 						gameEnded = true;
+						if (playersAlive.Count == 1)
+						{
+							playersAlive [0].Celebrate ();
+							PlayerEffectsHandler.Instance.FinishGame (playersAlive [0].displayer.transform.position);
+						}
+					}
 					actual = (actual + 1) % max_waves;
 				}
 			}
