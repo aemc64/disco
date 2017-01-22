@@ -25,12 +25,36 @@ public class SoundManager : MonoBehaviour
 		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
 		DontDestroyOnLoad(gameObject);
 		As = gameObject.GetComponent<AudioSource>();
-		PlayWithFadeOut(Random.Range(0,1));
+		PlayWithFadeOut(Random.Range(0,4));
+	}
+
+	public void PlayWithFadeOutRandom()
+	{
+		StartCoroutine(PlayClip(Random.Range(0, 4)));
 	}
 
 	public void PlayWithFadeOut(int clip)
 	{
 		StartCoroutine(PlayClip(clip));
+	}
+	
+	//This is used for skipping songs
+	private int cont = 6;
+	void OnGUI()
+	{
+		if (GUILayout.Button("Previous"))
+		{		
+			cont--;
+			if (cont < 6) { cont = 9; }
+			PlayWithFadeOut(cont);
+		}
+
+		if (GUILayout.Button("Next"))
+		{
+			cont++;
+			if (cont > 10) { cont = 6; }
+			PlayWithFadeOut(cont);
+		}
 	}
 
 	//Used to play single sound clips. In this case, we want the game song, menu or songlist.
@@ -43,12 +67,12 @@ public class SoundManager : MonoBehaviour
 		yield return null;
 	}
 		
-
+	public 
 	IEnumerator PlayClip(int clip)
 	{
 		if (As.clip != null)
 		{
-			yield return StartCoroutine(AudioFadeOut.FadeOut(As, 0.2f));
+			yield return StartCoroutine(AudioFadeOut.FadeOut(As, 0.75f));
 		}
 		yield return StartCoroutine(PlaySingle(clip));
 	}
