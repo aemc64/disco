@@ -22,7 +22,8 @@ public class Manager{
     private WaveGenerator wg;
 	private bool gameEnded;
 
-	public GameObject d;
+	private bool cloneWave;
+	private GameObject d;
 
 	public bool GameEnded
 	{
@@ -51,6 +52,7 @@ public class Manager{
 			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement);
 		}
 		waves = new Wave[max_waves];
+		cloneWave = true;
 	}
 
 	public void waveGeneration(){
@@ -91,31 +93,39 @@ public class Manager{
 			}
 				
 			if (waves [actual] != null) {
-				if (Time.time >= waves [actual].create_time + waves[actual].WaveActiveTime) {
-					if (d != null)
-						GameObject.Destroy (d);
-					d = GameObject.Instantiate (waves [actual].displayer);
-					d.GetComponent<Animator> ().Stop ();
-					List<Player> playersAlive = new List<Player>();
+				float actionTime = waves [actual].create_time + waves [actual].WaveActiveTime;
+				if (Time.time > actionTime + player_input_error) {
+
+					List<Player> playersAlive = new List<Player> ();
 					foreach (Player p in players) {
-						if (p.vida > 0)
-						{
-							float targetTime = waves [actual].create_time + waves [actual].WaveActiveTime;
-							p.check_correct_press (waves [actual].correctVal, player_input_error, targetTime);
+						if (p.vida > 0) {
+							p.waveEnd (waves [actual].id);
 						}
 						if (p.vida > 0)
 							playersAlive.Add (p);
 					}
-					if (playersAlive.Count < 2)
-					{
+					if (playersAlive.Count < 2) {
 						gameEnded = true;
-						if (playersAlive.Count == 1)
-						{
+						if (playersAlive.Count == 1) {
 							playersAlive [0].Celebrate ();
 							PlayerEffectsHandler.Instance.FinishGame (playersAlive [0].displayer.transform.position);
 						}
 					}
+
 					actual = (actual + 1) % max_waves;
+					cloneWave = true;
+				} else {
+					Debug.Log (waves [actual].id.ToString() +" "+cloneWave.ToString());
+					if (cloneWave && Time.time >= actionTime) {
+						if (d != null)
+							GameObject.Destroy (d);
+						d = GameObject.Instantiate (waves [actual].displayer);
+						d.GetComponent<Animator> ().Stop ();
+						cloneWave = false;
+					}
+					if (Time.time <= actionTime + player_input_error && Time.time >= actionTime - player_input_error) {
+						foreach (Player p in players) p.check_correct_press (waves [actual].correctVal, waves [actual].id);
+					}
 				}
 			}
 		}
