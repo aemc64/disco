@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using DG.Tweening;
 
 public class Player {
 	public int vida;
 	private int last_key_pressed;
 	private float timeAtLastKeyPressed;
-	private GameObject displayer;
+	public GameObject displayer;
 	private Vector2 direction;
 	private float movement;
+	private Animator anim;
 
 	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement){
 		vida = vida_in;
@@ -18,6 +20,7 @@ public class Player {
 		this.direction = direction;
 		this.movement = movement;
 		displayer = GameObject.Instantiate (playerPrefab);
+		anim = displayer.GetComponent<Animator> ();
 		displayer.transform.position = initPos;
 		this.movement = movement / vida_in;
 	}
@@ -32,6 +35,7 @@ public class Player {
 		if (correctVal == last_key_pressed) {
 			if ((targetTime - error <= timeAtLastKeyPressed) && (targetTime + error >= timeAtLastKeyPressed)) {
 				Debug.Log ("Correcto");
+				PlayerEffectsHandler.Instance.PlayRandomGood (displayer.transform.position); 
 			} else {
 				vida -= 1;
 				Damage ();
@@ -51,5 +55,17 @@ public class Player {
 	{
 		Vector3 target = displayer.transform.position + new Vector3 (movement * direction.x, movement * direction.y, 0f);
 		displayer.transform.DOLocalMove (target, 1f).SetEase (Ease.OutQuad);
+		anim.SetBool ("SimpleDance", false);
+		anim.SetTrigger ("Hurt");
+		if (vida == 0)
+			anim.SetTrigger ("Death");
+		else
+			anim.SetBool ("SimpleDance", true);
+	}
+
+	public void Celebrate()
+	{
+		anim.SetBool ("SimpleDance", false);
+		anim.SetBool ("Dance", true);
 	}
 }

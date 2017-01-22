@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wave {
 	public float create_time;
 	public int correctVal;
-	private GameObject displayer;
+	public GameObject displayer;
 	private float wave_grow_rate;
 	private float wave_active_time;
 
