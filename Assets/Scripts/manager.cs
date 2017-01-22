@@ -19,6 +19,13 @@ public class Manager{
 	private float[] wave_grow_rate;
 
     private WaveGenerator wg;
+	private bool gameEnded;
+
+	public bool GameEnded
+	{
+		get { return gameEnded; }
+		set { gameEnded = value; }
+	}
 
 	public Manager(int o,int j,int k,float l,float[] m,float n, Color[] colors,
 		GameObject wavePrefab, GameObject[] playerPrefabs, int[] charactersId, 
@@ -30,6 +37,7 @@ public class Manager{
 		player_input_error = n;
     
 		wg = new RandomWaveGenerator(Vector3.zero, wavePrefab, colors, wave_grow_rate, m);
+		//wg = new TextWaveGenerator(Vector3.zero, wavePrefab, colors, wave_grow_rate, m, "Vortex");
 
 		actual = 0;
 		next = 0;
@@ -39,7 +47,6 @@ public class Manager{
 		for (int i = 0;i<max_players;i++){
 			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement);
 		}
-
 		waves = new Wave[max_waves];
 	}
 
@@ -82,14 +89,21 @@ public class Manager{
 				
 			if (waves [actual] != null) {
 				if (Time.time >= waves [actual].create_time + waves[actual].WaveActiveTime) {
+					List<Player> playersAlive = new List<Player>();
 					foreach (Player p in players) {
-						float targetTime = waves [actual].create_time + waves [actual].WaveActiveTime;
-						p.check_correct_press (waves [actual].correctVal, player_input_error, targetTime);
+						if (p.vida > 0)
+						{
+							float targetTime = waves [actual].create_time + waves [actual].WaveActiveTime;
+							p.check_correct_press (waves [actual].correctVal, player_input_error, targetTime);
+						}
+						if (p.vida > 0)
+							playersAlive.Add (p);
 					}
+					if (playersAlive.Count < 2)
+						gameEnded = true;
 					actual = (actual + 1) % max_waves;
 				}
 			}
-
 		}
 	}
 }

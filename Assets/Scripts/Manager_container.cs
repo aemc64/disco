@@ -54,6 +54,7 @@ public class Manager_container : MonoBehaviour {
 				player_input_error, colors, wavePrefab, playersPrefabs, charactersId, wave_grow_rate, 
 				playersDefaultPosition, playersDirections, playersMovement);
 			d = new delegado(myupdate);
+			cargado = false;
 		}
 	}
 
@@ -80,47 +81,11 @@ public class Manager_container : MonoBehaviour {
 			}
 		}
 		m.on_update ();
+		if (m.GameEnded)
+			d = new delegado (nullFun);
 	}
 
     void Update () {
 		d ();
-
-		/**
-        if (Input.GetKey ("z"))
-			m.input_received (0, 1);
-		if (Input.GetKey ("x"))
-			m.input_received (0, 2);
-		if (Input.GetKey ("c"))
-			m.input_received (0, 3);
-		if (Input.GetKey ("v"))
-			m.input_received (0, 4);
-
-		if (Input.GetKey ("a"))
-			m.input_received (1, 1);
-		if (Input.GetKey ("s"))
-			m.input_received (1, 2);
-		if (Input.GetKey ("d"))
-			m.input_received (1, 3);
-		if (Input.GetKey ("f"))
-			m.input_received (1, 4);
-
-		if (Input.GetKey ("q"))
-			m.input_received (2, 1);
-		if (Input.GetKey ("w"))
-			m.input_received (2, 2);
-		if (Input.GetKey ("e"))
-			m.input_received (2, 3);
-		if (Input.GetKey ("r"))
-			m.input_received (2, 4);
-
-		if (Input.GetKey ("1"))
-			m.input_received (3, 1);
-		if (Input.GetKey ("2"))
-			m.input_received (3, 2);
-		if (Input.GetKey ("3"))
-			m.input_received (3, 3);
-		if (Input.GetKey ("4"))
-			m.input_received (3, 4);
-*/
     }
 }
