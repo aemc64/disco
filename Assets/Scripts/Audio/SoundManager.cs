@@ -11,6 +11,9 @@ public class SoundManager : MonoBehaviour
 	public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager. 
 	public AudioSource As;
 	public AudioSource sfx;
+	public GameObject Titulo;
+	public GameObject Artista;
+	private int cont = 6;
 	/*public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
 	public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
 	
@@ -49,7 +52,7 @@ public class SoundManager : MonoBehaviour
 	}
 	
 	//This is used for skipping songs
-	private int cont = 6;
+	
 	void OnGUI()
 	{
 		if (GUILayout.Button("Previous"))
@@ -92,7 +95,35 @@ public class SoundManager : MonoBehaviour
     public void ChangeBackground(int cont) {
         background.GetComponent<Image>().sprite = backgrounds[cont - 6];
     }
+
+	public void SongName(int cont)
+	{
+		switch (cont)
+		{
+			case 6:
+				Titulo.GetComponent<Text>().text = "80's Styke Loop";
+				Artista.GetComponent<Text>().text = "Bones 341";
+				break;
+			case 7:
+				Titulo.GetComponent<Text>().text = "Waveform";
+				Artista.GetComponent<Text>().text = "MusicByReo";
+				break;
+			case 8:
+				Titulo.GetComponent<Text>().text = "Vortex";
+				Artista.GetComponent<Text>().text = "PizzaKiller";
+				break;
+			case 9:
+				Titulo.GetComponent<Text>().text = "Sounding Wave";
+				Artista.GetComponent<Text>().text = "DUVESTECH";
+				break;
+			default:
+				Titulo.GetComponent<Text>().text = "Choose Song";
+				Artista.GetComponent<Text>().text = "Artist";
+				break;
+		}
+	}
 }
+
 public static class AudioFadeOut
 {
 
