@@ -37,6 +37,25 @@ public class SoundManager : MonoBehaviour
 	{
 		StartCoroutine(PlayClip(clip));
 	}
+	
+	//This is used for skipping songs
+	private int cont = 6;
+	void OnGUI()
+	{
+		if (GUILayout.Button("Previous"))
+		{		
+			cont--;
+			if (cont < 6) { cont = 9; }
+			PlayWithFadeOut(cont);
+		}
+
+		if (GUILayout.Button("Next"))
+		{
+			cont++;
+			if (cont > 10) { cont = 6; }
+			PlayWithFadeOut(cont);
+		}
+	}
 
 	//Used to play single sound clips. In this case, we want the game song, menu or songlist.
 	public IEnumerator PlaySingle(int clip)
