@@ -13,6 +13,8 @@ public class Player {
 	private float movement;
 	private Animator anim;
 
+	private uint lastcorrectwave;
+
 	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement){
 		vida = vida_in;
 		timeAtLastKeyPressed = 0;
@@ -23,6 +25,7 @@ public class Player {
 		anim = displayer.GetComponent<Animator> ();
 		displayer.transform.position = initPos;
 		this.movement = movement / vida_in;
+		lastcorrectwave = 0;
 	}
 
 	public void key_press(int i){
@@ -30,21 +33,22 @@ public class Player {
 		timeAtLastKeyPressed = Time.time;
 	}
 
-	public void check_correct_press(int correctVal, float error, float targetTime)
+	public void check_correct_press(int correctVal, uint waveid)
 	{
-		if (correctVal == last_key_pressed) {
-			if ((targetTime - error <= timeAtLastKeyPressed) && (targetTime + error >= timeAtLastKeyPressed)) {
+		if (lastcorrectwave != waveid) {
+			if (correctVal == last_key_pressed && Time.time == timeAtLastKeyPressed) {
 				Debug.Log ("Correcto");
+				lastcorrectwave = waveid;
 				PlayerEffectsHandler.Instance.PlayRandomGood (displayer.transform.position); 
-			} else {
-				vida -= 1;
-				Damage ();
 			}
-		} else {
+		}
+	}
+
+	public void waveEnd(uint waveid){
+		if (lastcorrectwave != waveid) {
 			vida -= 1;
 			Damage ();
 		}
-		last_key_pressed = 1000;
 	}
 
 	public void printVida(){
