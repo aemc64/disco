@@ -10,6 +10,7 @@ public class Player {
 	private GameObject displayer;
 	private Vector2 direction;
 	private float movement;
+	private Animator anim;
 
 	public Player(int vida_in, GameObject playerPrefab, Vector3 initPos, Vector2 direction, float movement){
 		vida = vida_in;
@@ -18,6 +19,7 @@ public class Player {
 		this.direction = direction;
 		this.movement = movement;
 		displayer = GameObject.Instantiate (playerPrefab);
+		anim = displayer.GetComponent<Animator> ();
 		displayer.transform.position = initPos;
 		this.movement = movement / vida_in;
 	}
@@ -51,5 +53,11 @@ public class Player {
 	{
 		Vector3 target = displayer.transform.position + new Vector3 (movement * direction.x, movement * direction.y, 0f);
 		displayer.transform.DOLocalMove (target, 1f).SetEase (Ease.OutQuad);
+		anim.SetBool ("SimpleDance", false);
+		anim.SetTrigger ("Hurt");
+		if (vida == 0)
+			anim.SetTrigger ("Death");
+		else
+			anim.SetBool ("SimpleDance", true);
 	}
 }

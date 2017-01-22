@@ -21,6 +21,9 @@ public class Manager{
     private WaveGenerator wg;
 	private bool gameEnded;
 
+	public bool b = true;
+	public GameObject d;
+
 	public bool GameEnded
 	{
 		get { return gameEnded; }
@@ -89,6 +92,12 @@ public class Manager{
 				
 			if (waves [actual] != null) {
 				if (Time.time >= waves [actual].create_time + waves[actual].WaveActiveTime) {
+					if (b) {
+						if (d != null)
+							GameObject.Destroy (d);
+						d = GameObject.Instantiate (waves [actual].displayer);
+						d.GetComponent<Animator> ().Stop ();
+					}
 					List<Player> playersAlive = new List<Player>();
 					foreach (Player p in players) {
 						if (p.vida > 0)
