@@ -61,22 +61,22 @@ public class Manager_container : MonoBehaviour {
 		for(int i = 0; i<4; i++) { 
 			if (players[i] == "T") {
 				if (Input.GetKey("k"))
-					m.input_received(i, 1);
+					m.input_received(i, 0);
 				if (Input.GetKey("o"))
-					m.input_received(i, 2);
+					m.input_received(i, 1);
 				if (Input.GetKey("l"))
-					m.input_received(i, 3);
+					m.input_received(i, 2);
 				if (Input.GetKey("p"))
-					m.input_received(i, 4);
+					m.input_received(i, 3);
 			} else {
 				if(Input.GetButton("A_" + players[i]))
-					m.input_received(i, 1);
+					m.input_received(i, 0);
 				if (Input.GetButton("B_" + players[i]))
-					m.input_received(i, 2);
+					m.input_received(i, 1);
 				if (Input.GetButton("X_" + players[i]))
-					m.input_received(i, 3);
+					m.input_received(i, 2);
 				if (Input.GetButton("Y_" + players[i]))
-					m.input_received(i, 4);
+					m.input_received(i, 3);
 			}
 		}
 		m.on_update ();
