@@ -70,8 +70,8 @@ public class Manager_container : MonoBehaviour {
 				if (Input.GetKey("p"))
 					m.input_received(i, 3);
 			} else {
-				if(Input.GetButton("A_" + players[i]))
-					m.input_received(i, 0);
+				if (Input.GetButton ("A_" + players [i])) 
+					m.input_received (i, 0);
 				if (Input.GetButton("B_" + players[i]))
 					m.input_received(i, 1);
 				if (Input.GetButton("X_" + players[i]))
