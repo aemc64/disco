@@ -27,18 +27,20 @@ public class Player {
 		timeAtLastKeyPressed = Time.time;
 	}
 
-	public void check_correct_press(int correctVal, float error){
+	public void check_correct_press(int correctVal, float error, float targetTime)
+	{
 		if (correctVal == last_key_pressed) {
-			if ((timeAtLastKeyPressed + error) < Time.time || (timeAtLastKeyPressed - error) > Time.time) {
+			if ((targetTime - error <= timeAtLastKeyPressed) && (targetTime + error >= timeAtLastKeyPressed)) {
+				Debug.Log ("Correcto");
+			} else {
 				vida -= 1;
 				Damage ();
-			} else {
-				Debug.Log ("Correcto");
 			}
 		} else {
 			vida -= 1;
 			Damage ();
 		}
+		last_key_pressed = 1000;
 	}
 
 	public void printVida(){
