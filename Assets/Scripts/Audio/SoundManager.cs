@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour
 	public float highPitchRange = 1.05f;            //The highest a sound effect will be randomly pitched.
 	
 		Let's not use thise for now - Zuil*/
+	public bool showButtons = true;
 
 	void Awake()
 	{
@@ -39,7 +40,7 @@ public class SoundManager : MonoBehaviour
 
 	public void PlaySelectedSong()
 	{
-		PlayClip (cont);
+		StartCoroutine(PlaySingle (cont));
 	}
 
 	public void PlayWithFadeOutRandom()
@@ -53,6 +54,11 @@ public class SoundManager : MonoBehaviour
 		sfx.Play();
 	}
 
+	public void StopMusic()
+	{
+		As.Stop ();
+	}
+
 	public void PlayWithFadeOut(int clip)
 	{
 		StartCoroutine(PlayClip(clip));
@@ -62,23 +68,32 @@ public class SoundManager : MonoBehaviour
 	
 	void OnGUI()
 	{
-		if (GUILayout.Button("Previous"))
-		{		
-			cont--;
-			if (cont < 6) { cont = 9; }
-            ChangeBackground(cont);
-			PlayWithFadeOut(cont);
-			SongName(cont);
+		if (showButtons)
+		{
+			if (GUILayout.Button("Previous"))
+			{		
+				cont--;
+				if (cont < 6) { cont = 9; }
+				ChangeBackground(cont);
+				PlayWithFadeOut(cont);
+				SongName(cont);
+			}
+
+			if (GUILayout.Button("Next"))
+			{
+				cont++;
+				if (cont > 9) { cont = 6; }
+				ChangeBackground(cont);
+				PlayWithFadeOut(cont);
+				SongName(cont);
+			}
 		}
 
-		if (GUILayout.Button("Next"))
-		{
-			cont++;
-			if (cont > 9) { cont = 6; }
-            ChangeBackground(cont);
-			PlayWithFadeOut(cont);
-			SongName(cont);
-		}
+	}
+
+	public void ShowControls(bool value)
+	{
+		showButtons = value;
 	}
 
 	//Used to play single sound clips. In this case, we want the game song, menu or songlist.

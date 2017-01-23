@@ -7,25 +7,33 @@ public class PlayerManager : MonoBehaviour {
 
     // Use this for initialization
     private int actual = 0;
-    public GameObject Panel1;
-    public GameObject Panel2;
-    public GameObject Panel3;
-    public GameObject Panel4;
-	public Sprite[] SelectedImages;
-    private GameObject[] panels = new GameObject[4];
+    public Sprite[] SelectedImages;
+	private Sprite[] originalImages;
+	private string[] originalText;
+	public GameObject[] panels = new GameObject[4];
     private string[] players = new string[4];
 
     void Start() {
-        panels[0] = Panel1;
-        panels[1] = Panel2;
-        panels[2] = Panel3;
-        panels[3] = Panel4;
-
+		originalImages = new Sprite[panels.Length];
+		originalText = new string[panels.Length];
+		for (int i = 0; i < panels.Length; i++) {
+			originalImages [i] = panels [i].GetComponentInChildren<Image> ().sprite;
+			originalText [i] = panels [i].GetComponentInChildren<Text> ().text;
+		}
     }
 
     // Update is called once per frame
 
-    
+	public void Reset()
+	{
+		actual = 0;
+		players = new string[4];
+		for (int i = 0; i < panels.Length; i++) {
+			panels [i].GetComponentInChildren<Image> ().sprite = originalImages [i];
+			panels [i].GetComponentInChildren<Text> ().text = originalText [i];
+		}
+	}
+
     void Update() {
 
 		if (players[0] != null && (Input.GetKeyDown("return") || Input.GetKeyDown("joystick button 7")))

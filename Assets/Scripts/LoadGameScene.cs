@@ -11,4 +11,10 @@ public class LoadGameScene : MonoBehaviour {
 	{
 		SceneManager.LoadScene(GameScene);
 	}
+
+	public void DestroyManagers()
+	{
+		DestroyImmediate (Manager_container.Instance.gameObject);
+		DestroyImmediate (SoundManager.instance.gameObject);
+	}
 }

@@ -34,6 +34,11 @@ public class PlayerEffectsHandler : MonoBehaviour {
 	private GameObject obj;
 
 	public float endDelay;
+	public GameObject getReadyMessage;
+	public GameObject danceMessage;
+	public AudioClip getReadyclip;
+	public AudioClip danceClip;
+	public float prepareWait;
 
 	private void Awake()
 	{
@@ -47,8 +52,33 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	void Start()
 	{
-		Manager_container.Instance.cargado = true;
-		SoundManager.instance.PlaySelectedSong ();
+		StartCoroutine (Prepare (false));
+	}
+
+	public IEnumerator Prepare(bool replay)
+	{
+		WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
+		SoundManager.instance.StopMusic ();
+		getReadyMessage.SetActive (true);
+		effectScr.PlayOneShot (getReadyclip);
+		yield return new WaitForSeconds (getReadyclip.length);
+		yield return new WaitForSeconds (prepareWait);
+		getReadyMessage.SetActive (false);
+		danceMessage.SetActive (true);
+		effectScr.PlayOneShot (danceClip);
+		if (!replay) {
+			Manager_container.Instance.cargado = true;
+			SoundManager.instance.PlaySelectedSong ();
+		} else {
+			SoundManager.instance.PlaySelectedSong ();
+			Manager_container.Instance.restart = true;
+			for (int i = 0; i < playersScore.Length; i++)
+				playersScore [i].text = "0";
+			WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
+			onRestart.Invoke ();
+		}
+		yield return new WaitForSeconds (prepareWait);
+		danceMessage.SetActive (false);
 	}
 
 	public void SetScore(int playerId, int score)
@@ -90,11 +120,7 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	public void Replay()
 	{
-		Manager_container.Instance.restart = true;
-		for (int i = 0; i < playersScore.Length; i++)
-			playersScore [i].text = "0";
-		WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
-		onRestart.Invoke ();
+		StartCoroutine (Prepare (true));
 	}
 
 	IEnumerator WinCo(Vector3 winnerPosition, int winnerNumber)
