@@ -19,20 +19,27 @@ public class SoundManager : MonoBehaviour
 	
 		Let's not use thise for now - Zuil*/
 
-
 	void Awake()
 	{
 		//Check if there is already an instance of SoundManager
-		if (instance == null)
+		if (instance == null) {
 			//if not, set it to this.
 			instance = this;
+			DontDestroyOnLoad (gameObject);
+		}
 		//If instance already exists:
-		else if (instance != this)
+		else if (instance != this) {
+			Destroy (gameObject);
+		}
 			
 		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
-		DontDestroyOnLoad(gameObject);
 		//FadeOut, this enforces our singleton pattern so there can only be one instance of SoundManager.
 		PlayWithFadeOut(Random.Range(0,4));
+	}
+
+	public void PlaySelectedSong()
+	{
+		PlayClip (cont);
 	}
 
 	public void PlayWithFadeOutRandom()

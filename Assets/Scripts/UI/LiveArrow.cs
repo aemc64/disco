@@ -17,11 +17,13 @@ public class LiveArrow : MonoBehaviour {
         if (direction)
         {
             set = (set == 5) ? 5 : set+1;
+			Manager_container.Instance.players_vida = set;
         }
 
         else
         {
             set = (set == 1) ? 1 : set-1;
+			Manager_container.Instance.players_vida = set;
         }
 
         switch (set)

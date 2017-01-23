@@ -129,7 +129,7 @@ public class Manager{
 						if (p.vida > 0)
 							playersAlive.Add (p);
 					}
-					if (playersAlive.Count < 2) {
+					if ((playersAlive.Count < 2 && max_players > 1) || (playersAlive.Count < 1 && max_players == 1)) {
 						gameEnded = true;
 						if (playersAlive.Count == 1) {
 							playersAlive [0].Celebrate ();

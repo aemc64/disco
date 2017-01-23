@@ -78,17 +78,48 @@ public class Manager_container : MonoBehaviour {
 			d = new delegado (waitForRestart);
 			restart = false;
 		} else {
-			for(int i = 0; i<4; i++) { 
-				if (players[i] == "T") {
+			for(int i = 0; i< max_players; i++) { 
+				if (players[i] == "T1") {
+					if (Input.GetKey("s"))
+						m.input_received(i, 0);
+					if (Input.GetKey("d"))
+						m.input_received(i, 1);
+					if (Input.GetKey("a"))
+						m.input_received(i, 2);
+					if (Input.GetKey("w"))
+						m.input_received(i, 3);
+				} else if (players[i] == "T2") {
 					if (Input.GetKey("k"))
 						m.input_received(i, 0);
-					if (Input.GetKey("o"))
-						m.input_received(i, 1);
 					if (Input.GetKey("l"))
+						m.input_received(i, 1);
+					if (Input.GetKey("j"))
 						m.input_received(i, 2);
-					if (Input.GetKey("p"))
+					if (Input.GetKey("i"))
 						m.input_received(i, 3);
-				} else {
+				}
+				else if (players[i] == "T3") {
+					if (Input.GetKey("down"))
+						m.input_received(i, 0);
+					if (Input.GetKey("right"))
+						m.input_received(i, 1);
+					if (Input.GetKey("left"))
+						m.input_received(i, 2);
+					if (Input.GetKey("up"))
+						m.input_received(i, 3);
+				}
+				else if (players[i] == "T4") {
+					if (Input.GetKey("5"))
+						m.input_received(i, 0);
+					if (Input.GetKey("6"))
+						m.input_received(i, 1);
+					if (Input.GetKey("4"))
+						m.input_received(i, 2);
+					if (Input.GetKey("8"))
+						m.input_received(i, 3);
+				}
+				else
+				{
 					if (Input.GetButton ("A_" + players [i])) 
 						m.input_received (i, 0);
 					if (Input.GetButton("B_" + players[i]))

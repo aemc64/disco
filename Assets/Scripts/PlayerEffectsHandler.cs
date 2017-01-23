@@ -45,6 +45,12 @@ public class PlayerEffectsHandler : MonoBehaviour {
 		effectScr = GetComponent<AudioSource> ();
 	}
 
+	void Start()
+	{
+		Manager_container.Instance.cargado = true;
+		SoundManager.instance.PlaySelectedSong ();
+	}
+
 	public void SetScore(int playerId, int score)
 	{
 		playersScore [playerId].text = score.ToString ();

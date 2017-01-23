@@ -31,6 +31,8 @@ public class PlayerManager : MonoBehaviour {
 		if (players[0] != null && (Input.GetKeyDown("return") || Input.GetKeyDown("joystick button 7")))
 		{
             players.CopyTo(Manager_container.Instance.players,0);
+			Manager_container.Instance.max_players = actual;
+			GetComponent<LoadGameScene> ().LoadGame ();
         }
 
         if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0))
@@ -38,12 +40,12 @@ public class PlayerManager : MonoBehaviour {
             bool there = false;
             for (int l = 0; l < actual; l++)
             {
-                if (players[l] == "T") there = true;
+                if (players[l] == "T1") there = true;
             }
             if (!there)
             {
-                players[actual] = "T";
-                panels[actual].GetComponentsInChildren<Text>()[0].text = "T";
+                players[actual] = "T1";
+                panels[actual].GetComponentsInChildren<Text>()[0].text = "T1";
 				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
                 actual++;
             }
