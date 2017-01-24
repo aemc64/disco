@@ -30,7 +30,6 @@ public class PlayerEffectsHandler : MonoBehaviour {
 	public UnityEvent onRestart;
 
 	private AudioSource effectScr;
-
 	private GameObject obj;
 
 	public float endDelay;
@@ -57,7 +56,6 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	public IEnumerator Prepare(bool replay)
 	{
-		WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
 		SoundManager.instance.StopMusic ();
 		getReadyMessage.SetActive (true);
 		effectScr.PlayOneShot (getReadyclip);
@@ -74,7 +72,6 @@ public class PlayerEffectsHandler : MonoBehaviour {
 			Manager_container.Instance.restart = true;
 			for (int i = 0; i < playersScore.Length; i++)
 				playersScore [i].text = "0";
-			WinMessage.GetComponent<Animator> ().SetTrigger ("Idle");
 			onRestart.Invoke ();
 		}
 		yield return new WaitForSeconds (prepareWait);
@@ -120,6 +117,7 @@ public class PlayerEffectsHandler : MonoBehaviour {
 
 	public void Replay()
 	{
+		Destroy (obj);
 		StartCoroutine (Prepare (true));
 	}
 
@@ -129,7 +127,8 @@ public class PlayerEffectsHandler : MonoBehaviour {
 		Vector3 targetPos = new Vector3(winnerPosition.x,winnerPosition.y, winLight.position.z);
 		winLight.position = targetPos;
 		winLight.gameObject.SetActive (true);
-		WinMessage.GetComponent<Animator> ().SetTrigger ("win" + winnerNumber.ToString ());
+		obj = Instantiate (WinMessage);
+		obj.GetComponent<Animator> ().SetTrigger ("win" + winnerNumber.ToString ());
 		if (WinSound != null)
 			effectScr.PlayOneShot (WinSound);
 		onGameFinish.Invoke ();
