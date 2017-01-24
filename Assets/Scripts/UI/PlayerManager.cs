@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour {
 	private string[] originalText;
 	public GameObject[] panels = new GameObject[4];
     private string[] players = new string[4];
+	private int keyboardPlayers;
+	public GameObject pressStart;
 
     void Start() {
 		originalImages = new Sprite[panels.Length];
@@ -27,6 +29,7 @@ public class PlayerManager : MonoBehaviour {
 	public void Reset()
 	{
 		actual = 0;
+		keyboardPlayers = 0;
 		players = new string[4];
 		for (int i = 0; i < panels.Length; i++) {
 			panels [i].GetComponentInChildren<Image> ().sprite = originalImages [i];
@@ -36,30 +39,80 @@ public class PlayerManager : MonoBehaviour {
 
     void Update() {
 
-		if (players[0] != null && (Input.GetKeyDown("return") || Input.GetKeyDown("joystick button 7")))
+		if (players [0] != null)
 		{
-            players.CopyTo(Manager_container.Instance.players,0);
-			Manager_container.Instance.max_players = actual;
-			GetComponent<LoadGameScene> ().LoadGame ();
-        }
+			pressStart.SetActive (true);
+			if (Input.GetKeyDown ("return") || Input.GetKeyDown ("joystick button 7"))
+			{
+				players.CopyTo(Manager_container.Instance.players,0);
+				Manager_container.Instance.max_players = actual;
+				GetComponent<LoadGameScene> ().LoadGame ();
+			}
+		}
 
-        if ((Input.GetAxis("Horizontal") != 0) || (Input.GetAxis("Vertical") != 0))
-        {
-            bool there = false;
-            for (int l = 0; l < actual; l++)
-            {
-                if (players[l] == "T1") there = true;
-            }
-            if (!there)
-            {
-                players[actual] = "T1";
-                panels[actual].GetComponentsInChildren<Text>()[0].text = "T1";
+		if (Input.GetKey("s"))
+		{
+			bool there = false;
+			for (int l = 0; l < actual; l++)
+			{
+				if (players[l] == "T1") there = true;
+			}
+			if (!there)
+			{
+				players[actual] = "T1";
+				panels[actual].GetComponentsInChildren<Text>()[0].text = "T1";
 				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
-                actual++;
-            }
-        }
-            
+				actual++;
+			}
+		}
+		if (Input.GetKey("k"))
+		{
+			bool there = false;
+			for (int l = 0; l < actual; l++)
+			{
+				if (players[l] == "T2") there = true;
+			}
+			if (!there)
+			{
+				players[actual] = "T2";
+				panels[actual].GetComponentsInChildren<Text>()[0].text = "T2";
+				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
+				actual++;
+			}
+		}
 
+		if (Input.GetKey("down"))
+		{
+			bool there = false;
+			for (int l = 0; l < actual; l++)
+			{
+				if (players[l] == "T3") there = true;
+			}
+			if (!there)
+			{
+				players[actual] = "T3";
+				panels[actual].GetComponentsInChildren<Text>()[0].text = "T3";
+				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
+				actual++;
+			}
+		}
+
+		if (Input.GetKey(KeyCode.Alpha5))
+		{
+			bool there = false;
+			for (int l = 0; l < actual; l++)
+			{
+				if (players[l] == "T4") there = true;
+			}
+			if (!there)
+			{
+				players[actual] = "T4";
+				panels[actual].GetComponentsInChildren<Text>()[0].text = "T4";
+				panels [actual].GetComponentsInChildren<Image> () [0].sprite = SelectedImages [actual];
+				actual++;
+			}
+		}
+            
         for (int j = 1; j <= 4; j++) {
             for (int i = 0; i < 20; i++)
             {

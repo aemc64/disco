@@ -109,13 +109,13 @@ public class Manager_container : MonoBehaviour {
 						m.input_received(i, 3);
 				}
 				else if (players[i] == "T4") {
-					if (Input.GetKey("5"))
+					if (Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.Alpha5))
 						m.input_received(i, 0);
-					if (Input.GetKey("6"))
+					if (Input.GetKey(KeyCode.Keypad6) || Input.GetKey(KeyCode.Alpha6))
 						m.input_received(i, 1);
-					if (Input.GetKey("4"))
+					if (Input.GetKey(KeyCode.Keypad4) || Input.GetKey(KeyCode.Alpha4))
 						m.input_received(i, 2);
-					if (Input.GetKey("8"))
+					if (Input.GetKey(KeyCode.Keypad8) || Input.GetKey(KeyCode.Alpha8))
 						m.input_received(i, 3);
 				}
 				else
