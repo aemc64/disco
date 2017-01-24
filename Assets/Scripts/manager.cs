@@ -19,7 +19,7 @@ public class Manager{
 	private int ultimo;
 	private float[] wave_grow_rate;
 
-    private WaveGenerator wg;
+    private RandomWaveGenerator wg;
 	private bool gameEnded;
 
 	private bool cloneWave;
@@ -76,6 +76,8 @@ public class Manager{
 			players[i]=new Player(players_vida,playerPrefabs[charactersId[i]], playersDefaultPosition[i], playersDirections[i], playersMovement,i);
 		}
 
+		wg.Reset ();
+			
 		//wg = new RandomWaveGenerator(Vector3.zero, wavePrefab, colors, wave_grow_rate, m);
 		GameEnded = false;
 	}
