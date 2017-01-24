@@ -10,8 +10,8 @@ public class RandomWaveGenerator : WaveGenerator{
     public int frequency = 50;
 
     private float lastBornTime;
-	private float changer = 0.8f;
-	private int everyWave = 10;
+	private float changer = 0.9f;
+	private int everyWave = 20;
 	private int waves = 0;
 
 	public RandomWaveGenerator(Vector3 waveOrigin, GameObject wavePrefab, Color[] colors, float[] wave_grow_rate, float[] wave_active_time) : base(waveOrigin, wavePrefab, colors, wave_grow_rate, wave_active_time) { }
