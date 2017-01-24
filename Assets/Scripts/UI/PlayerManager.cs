@@ -97,7 +97,7 @@ public class PlayerManager : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKey(KeyCode.Alpha5))
+		if (Input.GetKey(KeyCode.Keypad5) || Input.GetKey(KeyCode.Alpha5))
 		{
 			bool there = false;
 			for (int l = 0; l < actual; l++)
